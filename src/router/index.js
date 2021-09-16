@@ -13,15 +13,25 @@ const router = new VueRouter({
         },
         {
             path:'/login',
-            component:Login
+            component:Login,
+            meta:{
+                isHead:true
+            }
         },
         {
             path:'/register',
-            component:Register
+            component:Register,
+            meta:{
+                isHead:true
+            }
         },
         {
             path:'/search',
             component:Search
+        },
+        {
+            path:'/',
+            redirect:'/home'
         }
     ]
 })
