@@ -38,7 +38,7 @@
                 </h1>
                 <div class="searchArea">
                     <form action="###" class="searchForm">
-                        <input type="text" id="autocomplete" class="input-error input-xxlarge" />
+                        <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyWord" />
                         <button class="sui-btn btn-xlarge btn-danger" type="button" @click="Search">搜索</button>
                     </form>
                 </div>
@@ -49,9 +49,23 @@
 <script>
 export default {
     name:"Header",
+    data() {
+      return {
+        keyWord:'',
+      }
+    },
     methods: {
       Search(){
-        this.$router.push('/search')
+        //1.字符串写法
+        // this.$router.push('/search/'+this.keyWord+"?keyWord1="+this.keyWord.toUpperCase())
+        // 2.模板字符串
+        // this.$router.push(`/search/${this.keyWord}?keyWord1=${this.keyWord.toUpperCase()}`)
+        // 3.对象写法（使用频率最高）
+        this.$router.push({
+                name:'search',
+                params:{keyWord: this.keyWord},
+                query:{keyWord1:this.keyWord.toUpperCase()}
+            })
       }
     },
 }
