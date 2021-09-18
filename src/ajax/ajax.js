@@ -1,10 +1,11 @@
+// 对axios 的二次封装
 import axios from 'axios'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 // 创建 axios 实例
 const service = axios.create({
     baseURL:'/api',
-    timeout:30000,
+    timeout:20000,
 });
 
 // 请求拦截器  每个Ajax请求都要经过这个拦截器
@@ -30,4 +31,5 @@ service.interceptors.response.use(
         alert("发送Ajax错误"+error.message || '未知错误')
         return new Promise(() => {})
     }
-)
+);
+export default service
