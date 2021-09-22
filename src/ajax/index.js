@@ -5,7 +5,7 @@ import request from './ajax'
 // 请求函数
 export const reqCategoryList = () => {
     return request({
-        url:'/product/getBaseCategoryList',
+        url:'/v1/get/product/getBaseCategoryList',
         method:'get'
     })
 }

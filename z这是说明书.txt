@@ -1,0 +1,126 @@
+vue电商 练习 
+一，在github上建仓库(git github 的使用)
+二，先了解想要做的东西的样子，将架子搭起来
+	1.思路  （用vue spa ）
+	2.架子（即需要用的组件）==> 非路由组件与路由组件、
+	警用eslint（减少错误警告） 创建jsconfig.js @的使用
+	  (1)整体分为三大部分 上部（Header，Search,，Register，Login）中部（Home） 下部 （Footer）
+		建组件用文件夹
+		非路由组件：Header Footer
+		路由组件：Search，Register，Login
+	（2）需要明白的知识点
+		--1 非路由组件与路由组件的区别
+			同：使用三大步===> 定义 注册 使用
+			非路由组件: *非路由组件要注册在要使用他的组件中 ** 使用注册的组件标签 *** 两者的生命周期不同 非路由组件不会
+			路由组件：*路由组件要在路由配置中注册即Router 文件夹中 ** 声明式导航 <router-link ></router-link>
+    			<router-view></router-view> *** 两者的生命周期不同 路由组件会销毁重建 <keep-alive></keep-alive>
+		--2 安装配置 路由 npm install vue -router  创建router import 进 main.js 文件夹
+		--3 使用路由组件 
+	(3)进行组装(把静态页面中的内容拼装过来)
+		安装less less-loder    npm install less less-loader -D       less-loder 不要安装太高版本不然会报错 推荐 npm install less-loader@5.0.0
+		Header 的 HTML  less  image(注意路径) 其中 style 中 lang="less"
+		Footer 同理
+		reset 样式重置表 引入到 public 创建css文件 
+		
+		将创建路由组件加入要插入的地方  button使用编程式导航  重定向路由 
+		{path:'/', redirect:'/home'}
+		v-show 将不需要footer 的 login register 隐藏   通过在路由中使用 meta(元配置项)
+		meta在路由的routes中配置
+
+		****路由路径传参的匹配过程{
+
+		一 ，路由传参种类： params参数和 query 参数
+
+			params参数属于路径的一部分，路径匹配是要带上它  例如： path:"/search/:kerWord" 
+			query参数  不属于路径的一部分 在路径匹配时不需要带上  它的写法  ? a=b & c= d   		 
+		
+			二 ，路由路径带参数的三种写法
+			声明式导航 <router-link></router-link>
+
+			编程式导航
+			1.字符串写法
+				   this.$router.push('/search/'+this.keyWord + '?keyWord=' + this.keyWord.toUpperCase())
+			2.模板字符串
+				this.$router.push(`/search/${this.keyWord}?keyWord=${this.keyWord.toUpperCase()}`)
+			3.对象写法（使用频率最高）
+				 this.$router.push({
+        					name:'search',
+        					params:{keyWord:this.keyWord},
+        					query:{keyWord:this.keyWord}
+      					})
+			相关需要注意的问题
+
+			props 在路由中的三种写法
+            				props:true,   (只能映射params参数)
+            				props:{usename:'lisa'},
+            				props:(route) => {
+               	 				return {keyWord:route.params.keyWord,keyWord1:route.query.keyWord1}
+            				}
+
+			
+			编程式导航多次点击参数造成的问题
+			NavigationDuplicated
+			原因 vue-router 3.0 以后加入了Promise语法 
+			解决： 1.在指定跳转的地方写回调 ，或者catch处理错误 (不推荐 只能解决当前这个路由)
+				2.重写push/replace 方法  ==> 通过原型链找到这个方法 保存起来 在重新写
+				接受Location 以及 成功和失败 参数 
+			拆分home组建的内容  
+				非路由组件 及 公用组件 放在 components 路由组件放在 pages
+				根据内容可将其中的内容拆分成7个组件 侧边导航条==>公用组件(components)   全局注册 在main.js中 Vue.components("",)  
+				轮播图（list-container） 放在 home内 非路由组件 注意图片路径
+				第三个Recommend  第四个 Rank  第五个 Like 第六个Floor 第七个 Brand
+			安装 axios   nprogress	npm install i axios -S 	npm install --save nprogress
+			Search node_modules
+			
+			了解 熟悉 ==>模块化 api axios  跨域	 nprogress
+			axios  使用  函数用法  对象用法  三种参数 ： params参数  query参数 请求体参数
+			// params参数 在url中携带 属于路径的一部分
+	// query参数 可以在url中携带 以 ? 分割，后面是query参数
+        	// 也可以在配置对象中配置,配置的属性名叫params
+	// 请求体参数 在 data 中配置 当请求方式是 put post 才有请求体参数
+	// axios({
+    		// url:'localhost:8080/userinfo/1'  1 就是params参数
+    		// method:"",
+   		 // url:'locahost:8080/userinfo/?name = lisa', 第一种query参数写法
+   		 // params:{
+   		 //     name:'lisa'
+    			// }   第二种query参数写法
+    		// data:{
+    		//      配置请求体参数
+    			// }
+    
+		// })
+		配置代理
+
+		vuex的配置  安装	npm install vuex
+		vuex的第五个核心概念 modules 让数据分成每一个块 最终存放在status中
+		vuex里的三连环  引入 存数据(state)  直接修改数据(mutations) 提交发请求拿数据（actions）（asynce awiat）
+		放到对应的组件中使用 利用生命周期函数 
+		数据放在vuex中
+		
+		从vuex中拿数据到vue (从computed中那state getters 的数据)  （mutations actions 当中的东西到 methods 中拿）
+		再用 v-for 将接口中的数据放到页面中
+		
+		事件控制23级的显示和隐藏
+			1.先把原来的hover去掉 2.在item身上动态的强制绑定class，{item_on:布尔值} true时生效
+			3.移入哪个item，就让当前的item的类为true 4.设计一个数据， currentIdex = -1
+	******防抖 节流
+
+	lodash 库的使用 lodash已经默认安装 直接引入就行
+	
+	点击分类 声明式导航（routwe-link）  编程式导航($router.push) 最好用编程式导航      声明式导航会造成卡顿
+
+	事件委派  应用场合(1. 父元素的新子元素     2.子元素绑定相同事件)
+
+
+
+
+
+
+
+
+			
+
+
+
+			
