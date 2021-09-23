@@ -13,7 +13,11 @@
   import Footer from '@/components/Footer'
 export default {
   name:'App',
-  components:{Header,Footer}
+  components:{Header,Footer},
+  mounted(){
+    // 让 App 把 typvnav 要使用的数据提前准备 
+    this.$store.dispatch("getCategoryList");
+  }
 }
 </script>
 

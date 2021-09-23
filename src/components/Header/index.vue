@@ -61,12 +61,18 @@ export default {
         // 2.模板字符串
         // this.$router.push(`/search/${this.keyWord}?keyWord1=${this.keyWord.toUpperCase()}`)
         // 3.对象写法（使用频率最高）
-        this.$router.push({
-                name:'search',
-                params:{keyWord: this.keyWord},
-                query:{keyWord1:this.keyWord.toUpperCase()}
-            })
+        let location = {
+            name:'search',
+                params:{keyWord: this.keyWord || undefined},
+                // query:{keyWord1:this.keyWord.toUpperCase()}
+        }
+        if(this.$route.query){
+            location.query = this.$route.query
+        }
+        this.$router.push(location)
       }
+
+
     },
 }
 </script>

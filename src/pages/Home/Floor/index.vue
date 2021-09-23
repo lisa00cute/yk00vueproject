@@ -190,7 +190,7 @@
 
 <script>
 export default {
-    name:'Floor'
+    name:'Floor',
 }
 </script>
 
