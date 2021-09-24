@@ -5,9 +5,12 @@ import TypeNav from '@/components/TypeNav'
 import {reqCategoryList} from '@/ajax'
 import store from '@/store/index'
 import './mock/mockjServer'
+import 'swiper/css/swiper.css'  // 引入swiper.css
+import SileLoop from '@/components/SileLoop'
 reqCategoryList()
-Vue.config.productionTip = false
 Vue.component('TypeNav',TypeNav)
+Vue.component('SileLoop',SileLoop)
+Vue.config.productionTip = false
 new Vue({
   store,
   router,
